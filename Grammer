@@ -1,0 +1,43 @@
+PL : JS
+[while and for loop ]
+
+P -> Statement
+
+Statement -> UnaryExpression Statement | DeclareStat Statement 	| "for"( AssignExpression ; CondExpression ; UnaryExpression ) 	Statement | "while" ( CondExpression ) Statement | 	CompoundStatement Statement |	AssignExpression 	Statement | CondExpression Statement | AssignSpcl Statement 	| ArrayLiteral Statement | empty
+
+CompoundStatement -> { Statement }
+
+DeclareStat -> "var" list ;
+
+ArrayLiteral -> [ ] end | [ list ] end
+
+list -> AssignExpression , list | id , list | id
+
+AssignExpression -> id = Expression end
+
+end  -> empty | ;
+
+CondExpression -> empty | Expression CondOpt Expression
+
+CondOpt -> logicalOpt | ComparOpt
+
+ComparOpt -> < | > | >= | <= | == | === | != | !==
+
+logicalOpt -> && | || | !
+
+UnaryExpression -> id UnaryOpt end | UnaryOpt id  end  | empty
+
+UnaryOpt -> ++ | -- | !
+
+AssignSpcl -> id AssgnSpclOpt id end
+
+AssgnSpclOpt -> += | -= | *=  | /=
+
+
+
+Expression -> Expression+Q | Q
+	   Q -> Q * R | R
+	   R -> R / S | S
+	   S -> S – T | T
+	   T -> T ^ U | U
+	   U  -> id | num | fl | (Expression)
