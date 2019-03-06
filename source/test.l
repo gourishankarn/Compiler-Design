@@ -1,5 +1,6 @@
 %{
     #include "y.tab.h"
+    #include "dep.h"
     int lineNum=0;
     int single=0;
     int multi=0;
@@ -14,14 +15,14 @@ multi \/\*(.*\n)*.*\*\/
 "break" 		{return T_BRK;}
 "CONTINUE"		{return T_CNT;}
 "continue" 		{return T_CNT;}
-"TRUE"			{return T_TRUE;}
-"true"			{return T_TRUE;}
-"FALSE"			{return T_FALSE;}
-"false"			{return T_FALSE;}
-[a-zA-Z][_a-zA-Z0-9]* 		{return T_ID;}
-[\"a-zA-Z][a-zA-Z0-9]*[\"] 	{return T_STRING;}
-[0-9]+ 						{return T_NUM;}
-[0-9]+[\.][0-9]+ 			{return T_DIGIT;}
+"TRUE"			{yylval=1; return T_TRUE;}
+"true"			{yylval=1; return T_TRUE;}
+"FALSE"			{yylval=0; return T_FALSE;}
+"false"			{yylval=0; return T_FALSE;}
+[a-zA-Z][_a-zA-Z0-9]* 		{tokval=put_in_tabl(yytext);return T_ID;}//yylval=*yytext; 
+[\"a-zA-Z][a-zA-Z0-9]*[\"] 	{yylval=*yytext; return T_STRING;}
+[0-9]+ 						{yylval=atoi(yytext); return T_INT;}
+[0-9]+[\.][0-9]+ 			{yylval=atoi(yytext); return T_FLOAT;}
 "("		{return T_OBR;}
 ")"		{return T_CBR;}
 "["		{return T_SOBR;}
